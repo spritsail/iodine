@@ -5,5 +5,6 @@ if [ -z ${IODINE_PASS} ]; then echo "Error: The Iodine password must be specifie
 if [ ! -e '/dev/net/tun' ]; then echo "Error: You must run this Dockerfile with --privileged"; exit 1; fi
 
 IODINE_IP=${IODINE_IP:-"10.42.0.1"}
+EXT_IP=$(wget -qO- http://ipinfo.io/ip)
 
-iodined -c -f -P $IODINE_PASS $IODINE_IP $IODINE_HOST
+iodined -c -f -P $IODINE_PASS -n $EXT_IP $IODINE_IP $IODINE_HOST
