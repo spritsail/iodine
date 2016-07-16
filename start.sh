@@ -7,4 +7,11 @@ if [ ! -e '/dev/net/tun' ]; then echo "Error: You must run this Dockerfile with 
 IODINE_IP=${IODINE_IP:-"10.42.0.1"}
 EXT_IP=$(wget -qO- http://ipinfo.io/ip)
 
+sysctl -w net.ipv4.ip_forward=1
+iptables -t nat -A POSTROUTING -s $IODINE_IP/24 -o eth0 -j MASQUERADE
+
+iptables -S
+iptables -S -t nat
+
+
 iodined -c -f -P $IODINE_PASS -n $EXT_IP $IODINE_IP $IODINE_HOST

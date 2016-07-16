@@ -6,7 +6,7 @@ ADD start.sh /
 
 #Add deps, download and extract patchelf, download source code, patch it, update library location with patchelf
 
-RUN apk add --no-cache ca-certificates openssl libstdc++ net-tools \
+RUN apk add --no-cache ca-certificates openssl libstdc++ net-tools iptables \
  && wget -qO- https://github.com/strothj/alpine-patchelf/releases/download/0.9/0.9.tar.gz | tar xz \
  && cd /tmp && wget -qO- https://www.archlinux.org/packages/community/x86_64/iodine/download/ | tar xJC /tmp \
  && mv /tmp/usr/bin/iodined /usr/bin/iodined \
