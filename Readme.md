@@ -1,5 +1,5 @@
 # Iodine
-** This Dockerfile needs to be run with the NET_ADMIN capability. **
+**This Dockerfile needs to be run with the NET_ADMIN capability.**
 
 An Alpine Linux based Dockerfile to run Iodine - a program to tunnel IP over DNS requests. For more information on Iodine, see the [official website](http://code.kryo.se/iodine/).
 
