@@ -1,7 +1,9 @@
-FROM alpine:edge
+FROM alpine:3.6
+
 LABEL maintainer="Adam Dodman <adam.dodman@gmx.com>"
 
-RUN apk --no-cache iodine tini iptables net-tools
+RUN apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ iodine \
+ && apk add --no-cache tini iptables net-tools
 
 ADD start.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/start.sh
