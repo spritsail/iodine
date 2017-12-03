@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.7
 
 LABEL maintainer="Adam Dodman <adam.dodman@gmx.com>"
 
