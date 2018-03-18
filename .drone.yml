@@ -2,9 +2,10 @@ pipeline:
   identify:
     image: docker
     commands:
+      - set -o pipefail
       - apk add --no-cache curl git jq
       - git clone git://git.netfilter.org/iptables /tmp/iptables
-      - echo $(git --work-tree /tmp/ipdev/ describe --tags $(git --work-tree /tmp/ipdev/ rev-list --tags --max-count=1) | sed -e 's/^v//') > .iptables_ver
+      - echo $(git --work-tree /tmp/iptables/ describe --tags $(git --work-tree /tmp/iptables/ rev-list --tags --max-count=1) | sed -e 's/^v//') > .iptables_ver
       - echo $(curl -fLqsS 'https://api.github.com/repos/madler/zlib/tags' | jq -r '.[0].name' | sed -e 's/^v//') > .zlib_ver
       - echo $(curl -fLqsS http://code.kryo.se/iodine/ | sed -n 's/Latest.*:.*<b>\([0-9\.]*\).*/\1/p') > .iodine_ver
 
