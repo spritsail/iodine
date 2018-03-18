@@ -18,23 +18,6 @@ pipeline:
       - 'ZLIB_VER=%file: .zlib_ver'
       - 'IODINE_VER=%file: .iodine_ver'
 
-  test:
-    image: docker
-    volumes: [ '/var/run/docker.sock:/var/run/docker.sock' ]
-    commands:
-      - CON_NAME=$(docker run -d -p 53:53/udp --cap-add=NET_ADMIN --device /dev/net/tun -e IODINE_HOST=tunnel.example.com -e IODINE_PASS=password iodine-dev)
-      - timeout -t 5 docker logs $$CON_NAME &
-      - sleep 2
-      - IP=$(docker inspect --format='{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $$CON_NAME)
-      - if [ -z "$IP" ]; then
-            echo "The container exited.. sadpanda";
-            docker inspect --format='{{.State.ExitCode}}' $$CON_NAME;
-            docker rm $$CON_NAME
-            exit 25;
-        fi
-      - docker kill $$CON_NAME
-      - docker rm $$CON_NAME
-
   publish:
     image: spritsail/docker-publish
     volumes: [ '/var/run/docker.sock:/var/run/docker.sock' ]
