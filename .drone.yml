@@ -13,9 +13,9 @@ pipeline:
     volumes: [ '/var/run/docker.sock:/var/run/docker.sock' ]
     repo: iodine-dev
     build_args:
-      - 'IPTABLES_VER=%file .iptables_ver'
-      - 'ZLIB_VER=%file .zlib_ver'
-      - 'IODINE_VER=%file .iodine_ver'
+      - 'IPTABLES_VER=%file: .iptables_ver'
+      - 'ZLIB_VER=%file: .zlib_ver'
+      - 'IODINE_VER=%file: .iodine_ver'
 
   test:
     image: docker
@@ -43,7 +43,7 @@ pipeline:
     repo: spritsail/iodine
     tags:
       - 'latest'
-      - '%file .iodine_ver'
+      - '%file: .iodine_ver'
 
   notify:
     image: appleboy/drone-telegram
