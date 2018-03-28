@@ -33,7 +33,7 @@ RUN apt-get -y update \
 
 WORKDIR /tmp/zlib
 
-RUN curl -qL "https://github.com/madler/zlib/archive/v${ZLIB_VER}.tar.gz" | \
+RUN curl -fsSL "https://github.com/madler/zlib/archive/v${ZLIB_VER}.tar.gz" | \
         tar xz --strip-components=1 \
  && ./configure \
       --prefix=/usr \
@@ -44,7 +44,7 @@ RUN curl -qL "https://github.com/madler/zlib/archive/v${ZLIB_VER}.tar.gz" | \
 
 WORKDIR /tmp/iodine
 
-RUN curl -q "http://code.kryo.se/iodine/iodine-${IODINE_VER}.tar.gz" | \
+RUN curl -fsSL "https://code.kryo.se/iodine/iodine-${IODINE_VER}.tar.gz" | \
         tar xz  --strip-components=1 \
  && make \
  && mv bin/iodine* /output/usr/bin
