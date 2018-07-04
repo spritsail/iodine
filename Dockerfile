@@ -18,7 +18,7 @@ RUN apt-get -y update \
       --prefix=/usr \
       --sbindir=/usr/bin \
       --sysconfdir=/etc \
-      --disable-dependecy-tracking \
+      --disable-dependency-tracking \
       --without-kernel \
       --disable-shared \
       --disable-nftables \
@@ -69,5 +69,4 @@ COPY --from=builder /output/ /
 
 EXPOSE 53/udp
 
-ENTRYPOINT ["/sbin/tini", "--"]
 CMD ["/usr/bin/start.sh"]
