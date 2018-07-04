@@ -44,13 +44,20 @@ RUN curl -fsSL "https://github.com/madler/zlib/archive/v${ZLIB_VER}.tar.gz" | \
 
 WORKDIR /tmp/iodine
 
-RUN curl -fsSL "https://code.kryo.se/iodine/iodine-${IODINE_VER}.tar.gz" | \
+RUN apt-get -y install check libselinux1-dev \
+ && curl -fsSL "https://github.com/frekky/iodine/archive/master.tar.gz" | \
         tar xz  --strip-components=1 \
+ && autoreconf --install \
+ && ./configure \
+        --disable-dependency-tracking \
+        --disable-systemd \
+        --enable-selinux \
  && make \
- && mv bin/iodine* /output/usr/bin
+ && cp iodine iodined /output/usr/bin \
+ && cp /lib/$(gcc --print-multiarch)/libselinux.so.1 /lib/$(gcc --print-multiarch)/libpcre.so.3 /output/usr/lib
 
-ADD start.sh /output/usr/bin
-RUN chmod +x /output/usr/bin/start.sh
+ADD start.sh /output/usr/local/bin/start-iodined
+RUN chmod +x /output/usr/local/bin/start-iodined
 
 #===============
 
@@ -61,7 +68,7 @@ ARG IODINE_VER
 LABEL maintainer="Spritsail <iodine@spritsail.io>" \
       org.label-schema.vendor="Spritsail" \
       org.label-schema.name="Iodine" \
-      org.label-schema.url="http://code.kryo.se/iodine/" \
+      org.label-schema.url="https://github.com/frekky/iodine" \
       org.label-schema.description="Tunnel IPv4 data over DNS" \
       org.label-schema.version=${IODINE_VER}
 
@@ -69,4 +76,4 @@ COPY --from=builder /output/ /
 
 EXPOSE 53/udp
 
-CMD ["/usr/bin/start.sh"]
+ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/start-iodined"]

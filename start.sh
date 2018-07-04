@@ -16,4 +16,5 @@ iptables -t filter -A FORWARD -i eth0 -o dns0 -m state --state RELATED,ESTABLISH
 
 $IPTABLES
 
+set -x
 exec iodined -c -f -P $IODINE_PASS -n $EXT_IP $IODINE_IP $IODINE_HOST

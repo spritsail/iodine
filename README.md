@@ -1,21 +1,21 @@
 [hub]: https://hub.docker.com/r/spritsail/iodine
-[git]: https://github.com/spritsail/iodine
+[git]: https://github.com/spritsail/iodine/tree/frekky
 [drone]: https://drone.spritsail.io/spritsail/iodine
-[mbdg]: https://microbadger.com/images/spritsail/iodine
+[mbdg]: https://microbadger.com/images/spritsail/iodine:frekky
 
 # [Spritsail/Iodine][hub]
 
-[![Layers](https://images.microbadger.com/badges/image/spritsail/iodine.svg)][mbdg]
-[![Latest Version](https://images.microbadger.com/badges/version/spritsail/iodine.svg)][hub]
-[![Git Commit](https://images.microbadger.com/badges/commit/spritsail/iodine.svg)][git]
+[![Layers](https://images.microbadger.com/badges/image/spritsail/iodine:frekky.svg)][mbdg]
+[![Latest Version](https://images.microbadger.com/badges/version/spritsail/iodine:frekky.svg)][hub]
+[![Git Commit](https://images.microbadger.com/badges/commit/spritsail/iodine:frekky.svg)][git]
 [![Docker Pulls](https://img.shields.io/docker/pulls/spritsail/iodine.svg)][hub]
 [![Docker Stars](https://img.shields.io/docker/stars/spritsail/iodine.svg)][hub]
-[![Build Status](https://drone.spritsail.io/api/badges/spritsail/iodine/status.svg)][drone]
+[![Build Status](https://drone.spritsail.io/api/badges/spritsail/iodine/status.svg?branch=frekky)][drone]
 
 
 **This Dockerfile needs to be run with the NET_ADMIN capability, and a TUN device passed through.**  
 
-A [busybox](https://github.com/spritsail/busybox) based Dockerfile to run Iodine - a program to tunnel IP over DNS requests. For more information on Iodine, see the [official website](http://code.kryo.se/iodine/).
+A [busybox](https://github.com/spritsail/busybox) based Dockerfile to run Iodine - a program to tunnel IP over DNS requests. For more information on the frekky/iodine fork, see the [repository](https://github.com/frekky/iodine).
 
 ## Environment Variables
 This dockerfile requires some environment variables set to run. ```$IODINE_HOST``` must be set to the external hostname DNS requests are coming from, and ```$IODINE_PASS``` must be set to the password clients will use to connect. You may also set ```$IODINE_IP``` to define the range of IPs that Iodine will assign clients. This can be defined as the start IP (such as ```10.0.0.1```), or the subnet to assign from (such as ```10.0.0.0/24```). However this is not a required variable and defaults to ```10.42.16.1/24```, which should be sufficient for most users. ```$IPTABLES ``` can also be used to define custom routing rules (see below).
