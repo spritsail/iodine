@@ -37,6 +37,6 @@ Note: Iodine **does not encrypt traffic**, if you require security, consider usi
 
 ## Example run commands
 Bare minimum:  
-``` docker run -p 53:53/udp --cap-add=NET_ADMIN --device /dev/net/tun -e IODINE_HOST=tunnel.example.com -e IODINE_PASS=password spritsail/iodine```   
+``` docker run -p 53:53/udp --cap-add=NET_ADMIN --device /dev/net/tun -e IODINE_HOST=tunnel.example.com -e IODINE_PASS=password spritsail/iodine:frekky```   
 All variables:  
-``` docker run -d --name Iodine -p 53:53/udp --cap-add=NET_ADMIN --device /dev/net/tun -e IODINE_HOST=tunnel.example.com -e IODINE_PASS=password -e IODINE_IP=10.0.0.1 -e IPTABLES="iptables -t filter -A FORWARD -i dns0 -o eth0 -d 1.2.3.4 -j ACCEPT"  spritsail/iodine```
+``` docker run -d --name Iodine -p 53:53/udp --cap-add=NET_ADMIN --device /dev/net/tun -e IODINE_HOST=tunnel.example.com -e IODINE_PASS=password -e IODINE_IP=10.0.0.1 -e IPTABLES="iptables -t filter -A FORWARD -i dns0 -o eth0 -d 1.2.3.4 -j ACCEPT"  spritsail/iodine:frekky```
