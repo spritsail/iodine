@@ -1,6 +1,6 @@
 ARG IPTABLES_VER=1.8.0
 ARG ZLIB_VER=1.2.11
-ARG IODINE_VER=0.7.0
+ARG IODINE_VER=62e3437c6ec501a23b1a64f19a9c376a83596623
 
 FROM spritsail/debian-builder:stretch-slim as builder
 
@@ -45,8 +45,8 @@ RUN curl -fsSL "https://github.com/madler/zlib/archive/v${ZLIB_VER}.tar.gz" | \
 WORKDIR /tmp/iodine
 
 RUN apt-get -y install check libselinux1-dev \
- && curl -fsSL "https://github.com/frekky/iodine/archive/master.tar.gz" | \
-        tar xz  --strip-components=1 \
+ && git clone https://github.com/frekky/iodine.git . \
+ && git checkout ${IODINE_VER} . \
  && autoreconf --install \
  && ./configure \
         --disable-dependency-tracking \
