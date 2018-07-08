@@ -1,22 +1,15 @@
 pipeline:
-  identify:
-    image: docker
-    commands:
-      - set -o pipefail
-      - apk add --no-cache curl git jq
-      - git clone git://git.netfilter.org/iptables /tmp/iptables
-      - echo $(git -C /tmp/iptables describe --tags $(git -C /tmp/iptables rev-list --tags --max-count=1) | sed -e 's/^v//') > .iptables_ver
-      - echo $(curl -fLqsS 'https://api.github.com/repos/madler/zlib/tags' | jq -r '.[0].name' | sed -e 's/^v//') > .zlib_ver
-      - echo $(curl -fLqsS http://code.kryo.se/iodine/ | sed -n 's/Latest.*:.*<b>\([0-9\.]*\).*/\1/p') > .iodine_ver
 
   build:
     image: spritsail/docker-build
     volumes: [ '/var/run/docker.sock:/var/run/docker.sock' ]
     repo: iodine-dev
-    build_args:
-      - 'IPTABLES_VER=%file: .iptables_ver'
-      - 'ZLIB_VER=%file: .zlib_ver'
-      - 'IODINE_VER=%file: .iodine_ver'
+
+  tag:
+    image: docker
+    volumes: [ '/var/run/docker.sock:/var/run/docker.sock' ]
+    commands:
+      - docker inspect -f '{{ index .Config.Labels "io.spritsail.version.iodine" }}' iodine-dev | cut -c-7 > .iodine_ver
 
   publish:
     image: spritsail/docker-publish
@@ -26,8 +19,8 @@ pipeline:
     from: iodine-dev
     repo: spritsail/iodine
     tags:
-      - 'latest'
-      - '%file: .iodine_ver'
+      - 'frekky'
+      - '%fileauto: %prefix: frekky% .iodine_ver'
 
   notify:
     image: spritsail/notify

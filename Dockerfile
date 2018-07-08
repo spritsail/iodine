@@ -64,13 +64,18 @@ RUN chmod +x /output/usr/local/bin/start-iodined
 FROM spritsail/busybox
 
 ARG IODINE_VER
+ARG ZLIB_VER
+ARG IPTABLES_VER
 
 LABEL maintainer="Spritsail <iodine@spritsail.io>" \
       org.label-schema.vendor="Spritsail" \
       org.label-schema.name="Iodine" \
       org.label-schema.url="https://github.com/frekky/iodine" \
       org.label-schema.description="Tunnel IPv4 data over DNS" \
-      org.label-schema.version=${IODINE_VER}
+      org.label-schema.version=${IODINE_VER} \
+      io.spritsail.version.iodine=${IODINE_VER} \
+      io.spritsail.version.zlib=${ZLIB_VER} \
+      io.spritsail.version.iptables=${IPTABLES_VER}
 
 COPY --from=builder /output/ /
 
