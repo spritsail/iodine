@@ -18,7 +18,7 @@ RUN apt-get -y update \
       --prefix=/usr \
       --sbindir=/usr/bin \
       --sysconfdir=/etc \
-      --disable-dependecy-tracking \
+      --disable-dependency-tracking \
       --without-kernel \
       --disable-shared \
       --disable-nftables \
@@ -49,25 +49,30 @@ RUN curl -fsSL "https://code.kryo.se/iodine/iodine-${IODINE_VER}.tar.gz" | \
  && make \
  && mv bin/iodine* /output/usr/bin
 
-ADD start.sh /output/usr/bin
-RUN chmod +x /output/usr/bin/start.sh
+ADD start.sh /output/usr/local/bin/start-iodined
+RUN chmod +x /output/usr/local/bin/start-iodined
 
 #===============
 
 FROM spritsail/busybox
 
 ARG IODINE_VER
+ARG ZLIB_VER
+ARG IPTABLES_VER
 
 LABEL maintainer="Spritsail <iodine@spritsail.io>" \
       org.label-schema.vendor="Spritsail" \
       org.label-schema.name="Iodine" \
       org.label-schema.url="http://code.kryo.se/iodine/" \
       org.label-schema.description="Tunnel IPv4 data over DNS" \
-      org.label-schema.version=${IODINE_VER}
+      org.label-schema.version=${IODINE_VER} \
+      io.spritsail.version.iodine=${IODINE_VER} \
+      io.spritsail.version.zlib=${ZLIB_VER} \
+      io.spritsail.version.iptables=${IPTABLES_VER}
 
 COPY --from=builder /output/ /
 
 EXPOSE 53/udp
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["/usr/bin/start.sh"]
+CMD ["/usr/local/bin/start-iodined"]
