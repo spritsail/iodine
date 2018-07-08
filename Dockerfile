@@ -81,4 +81,5 @@ COPY --from=builder /output/ /
 
 EXPOSE 53/udp
 
-ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/start-iodined"]
+ENTRYPOINT ["/sbin/tini", "--"]
+CMD ["/usr/local/bin/start-iodined"]
