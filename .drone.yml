@@ -5,12 +5,6 @@ pipeline:
     volumes: [ '/var/run/docker.sock:/var/run/docker.sock' ]
     repo: iodine-dev
 
-  tag:
-    image: docker
-    volumes: [ '/var/run/docker.sock:/var/run/docker.sock' ]
-    commands:
-      - docker inspect -f '{{ index .Config.Labels "io.spritsail.version.iodine" }}' iodine-dev > .iodine_ver
-
   publish:
     image: spritsail/docker-publish
     volumes: [ '/var/run/docker.sock:/var/run/docker.sock' ]
@@ -20,7 +14,7 @@ pipeline:
     repo: spritsail/iodine
     tags:
       - 'latest'
-      - '%file: .iodine_ver'
+      - '%label io.spritsail.version.iodine'
 
   notify:
     image: spritsail/notify
