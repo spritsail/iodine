@@ -1,26 +1,18 @@
 pipeline:
-
   build:
     image: spritsail/docker-build
     volumes: [ '/var/run/docker.sock:/var/run/docker.sock' ]
-    repo: iodine-dev
-
-  tag:
-    image: docker
-    volumes: [ '/var/run/docker.sock:/var/run/docker.sock' ]
-    commands:
-      - docker inspect -f '{{ index .Config.Labels "io.spritsail.version.iodine" }}' iodine-dev | cut -c-7 > .iodine_ver
+    repo: iodine-frekky-dev
 
   publish:
     image: spritsail/docker-publish
     volumes: [ '/var/run/docker.sock:/var/run/docker.sock' ]
     secrets: [ docker_username, docker_password, microbadger_token ]
-    when: { event: [push, tag, deployment] }
-    from: iodine-dev
+    when: { branch: [ frekky ], event: [ push, tag, deployment ] }
+    from: iodine-frekky-dev
     repo: spritsail/iodine
     tags:
-      - 'frekky'
-      - '%fileauto: %prefix: frekky% .iodine_ver'
+      - '%label io.spritsail.version.iodine | %prefix frekky | %auto'
 
   notify:
     image: spritsail/notify
