@@ -28,7 +28,8 @@ RUN apt-get -y update \
       --disable-nfsynproxy \
  && make \
  && DESTDIR="$PWD/out" make install \
- && mkdir -p /output/usr/lib \
+ && mkdir -p /output/usr/lib /output/run \
+ #Run directory fixes spritsail/iodine issue #9
  && mv "out/usr/bin/" /output/usr/bin/
 
 WORKDIR /tmp/zlib
