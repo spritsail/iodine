@@ -13,7 +13,6 @@ pipeline:
     repo: spritsail/iodine
     tags:
       - '%label io.spritsail.version.iodine | %prefix frekky | %auto'
-
   notify:
     image: spritsail/notify
     when: { status: [ success, failure ] }
