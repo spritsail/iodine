@@ -1,6 +1,6 @@
 ARG IPTABLES_VER=1.8.0
 ARG ZLIB_VER=1.2.11
-ARG IODINE_VER=62e3437c6ec501a23b1a64f19a9c376a83596623
+ARG IODINE_VER=db08e195a68e40dcc3ec91688cbf0897fc1df7cb
 
 FROM spritsail/debian-builder:stretch-slim as builder
 
