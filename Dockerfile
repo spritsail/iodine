@@ -1,5 +1,5 @@
 ARG IPTABLES_VER=1.8.0
-ARG ZLIB_VER=1.2.12
+ARG ZLIB_VER=1.2.13
 ARG IODINE_VER=0.7.0
 
 FROM spritsail/debian-builder:stable as builder
