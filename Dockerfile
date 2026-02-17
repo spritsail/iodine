@@ -12,7 +12,7 @@ WORKDIR /tmp/iptables
 
 RUN apt-get -y update \
  && apt-get -y install libmnl-dev libnftnl-dev bison flex zlib1g-dev tree \
- && curl -q "http://ftp.netfilter.org/pub/iptables/iptables-${IPTABLES_VER}.tar.bz2" | \
+ && curl -q "https://ftp.netfilter.org/pub/iptables/iptables-${IPTABLES_VER}.tar.bz2" | \
         tar xj --strip-components=1 \
  && ./configure \
       --prefix=/usr \
